@@ -2,7 +2,7 @@
   <div>
     <!-- 寄送地址 -->
     <template v-if="step === 0">
-      <form>
+      <form class="part">
         <div class="form-row">
           <div class="form-group col-md-4">
             <label for="gender">稱謂</label>
@@ -68,25 +68,27 @@
 
     <!-- 運送方式 -->
     <template v-if="step === 1">
-      <div
-        v-for="shipInfo in shipInfos"
-        :key="shipInfo.id"
-        class="ship-way-wrapper"
-      >
-        <div class="ship-way">
-          <input class="mr-3" name="ship" type="radio" value="standard" />
-          <label for="" class="mt-2"
-            >{{ shipInfo.shipWay }} <br />
-            {{ shipInfo.shipTime }}</label
-          >
+      <div class="part">
+        <div
+          v-for="shipInfo in shipInfos"
+          :key="shipInfo.id"
+          class="ship-way-wrapper"
+        >
+          <div class="ship-way">
+            <input class="mr-3" name="ship" type="radio" value="standard" />
+            <label for="" class="mt-2"
+              >{{ shipInfo.shipWay }} <br />
+              {{ shipInfo.shipTime }}</label
+            >
+          </div>
+          <div class="ship-price">{{ shipInfo.shipPrice }}<br /></div>
         </div>
-        <div class="ship-price">{{ shipInfo.shipPrice }}<br /></div>
       </div>
     </template>
 
     <!-- 付款資訊 -->
     <template v-if="step === 2">
-      <form>
+      <form class="part">
         <div class="form-row">
           <div class="form-group col-md-8">
             <label for="owner-name">持卡人姓名</label>
@@ -134,6 +136,10 @@
 </template>
 
 <style scoped>
+.part {
+  height: 300px;
+}
+
 .ship-way-wrapper {
   display: flex;
   justify-content: space-between;
