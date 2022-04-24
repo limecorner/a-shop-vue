@@ -1,6 +1,6 @@
 <template>
   <div class="container py-5">
-    <h3>結帳</h3>
+    <h4 class="mb-4">結帳</h4>
     <main class="row">
       <!-- check-left-section -->
       <section class="col-6">
