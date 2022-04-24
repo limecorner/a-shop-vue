@@ -32,9 +32,9 @@
       </div>
     </div>
 
-    <h3 v-show="step === 0">寄送地址</h3>
-    <h3 v-show="step === 1">運送方式</h3>
-    <h3 v-show="step === 2">付款資訊</h3>
+    <h3 v-show="step === 0" class="mb-4">寄送地址</h3>
+    <h3 v-show="step === 1" class="mb-4">運送方式</h3>
+    <h3 v-show="step === 2" class="mb-4">付款資訊</h3>
   </div>
 </template>
 
@@ -102,8 +102,14 @@
 export default {
   data() {
     return {
-      step: 0,
+      // step: 0,
     };
+  },
+  props: {
+    step: {
+      type: Number,
+      required: true,
+    },
   },
 };
 </script>

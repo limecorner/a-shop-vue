@@ -4,10 +4,10 @@
     <main class="row">
       <!-- check-left-section -->
       <section class="col-6">
-        <ProductCheckLeftSectionTop />
-        <ProductCheckLeftSectionMiddle />
+        <ProductCheckLeftSectionTop :step="step" />
+        <ProductCheckLeftSectionMiddle :step="step" />
         <hr />
-        <button class="btn btn-primary">下一步</button>
+        <button @click="onNextStep" class="btn btn-primary">下一步</button>
       </section>
 
       <!-- check-right-section -->
@@ -29,6 +29,17 @@ export default {
     ProductCheckLeftSectionTop,
     ProductCheckLeftSectionMiddle,
     ProductCheckRigthSection,
+  },
+  data() {
+    return {
+      step: 0,
+    };
+  },
+  methods: {
+    onNextStep() {
+      if (this.step >= 2) return;
+      this.step++;
+    },
   },
 };
 </script>
