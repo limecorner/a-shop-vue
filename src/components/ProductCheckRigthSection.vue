@@ -29,7 +29,7 @@
 
       <div class="product-price">
         <p>運費</p>
-        <p>免費</p>
+        <p>{{ shipWayId === 1 ? "免費" : 500 | toCurrency }}</p>
       </div>
       <div class="product-price">
         <p>小計</p>
@@ -130,6 +130,16 @@ export default {
       totalPrice: 5298,
     };
   },
+  props: {
+    shipInfos: {
+      type: Array,
+      required: true,
+    },
+    shipWayId: {
+      type: Number,
+      required: true,
+    },
+  },
   methods: {
     onAddOneCount(id, eachPrice) {
       this.products[id - 1].count++;
@@ -154,6 +164,18 @@ export default {
         maximumFractionDigits: 0,
       });
       return formatter.format(value);
+    },
+  },
+  watch: {
+    shipWayId: {
+      handler: function () {
+        if (this.shipWayId === 1) {
+          this.totalPrice -= 500;
+        } else {
+          this.totalPrice += 500;
+        }
+      },
+      // deep: true,
     },
   },
 };

@@ -5,7 +5,12 @@
       <!-- check-left-section -->
       <section class="col-6">
         <ProductCheckLeftSectionTop :step="step" />
-        <ProductCheckLeftSectionMiddle :step="step" />
+        <ProductCheckLeftSectionMiddle
+          :step="step"
+          :ship-infos="shipInfos"
+          :initial-ship-way-id="shipWayId"
+          @change-ship-way-id="changeShipWayId"
+        />
         <hr />
 
         <!-- form control -->
@@ -22,7 +27,10 @@
 
       <!-- check-right-section -->
       <section class="col-5">
-        <ProductCheckRigthSection />
+        <ProductCheckRigthSection
+          :ship-infos="shipInfos"
+          :ship-way-id="shipWayId"
+        />
         <hr />
       </section>
     </main>
@@ -51,6 +59,23 @@ import ProductCheckLeftSectionTop from "./../components/ProductCheckLeftSectionT
 import ProductCheckLeftSectionMiddle from "./../components/ProductCheckLeftSectionMiddle.vue";
 import ProductCheckRigthSection from "./../components/ProductCheckRigthSection.vue";
 
+const dummyData = {
+  shipInfos: [
+    {
+      id: 1,
+      shipWay: "標準運送",
+      shipTime: "約 3~7 個工作天",
+      shipPrice: "免費",
+    },
+    {
+      id: 2,
+      shipWay: "DHL 貨運",
+      shipTime: "48 小時內送達",
+      shipPrice: "$500",
+    },
+  ],
+};
+
 export default {
   components: {
     ProductCheckLeftSectionTop,
@@ -60,6 +85,8 @@ export default {
   data() {
     return {
       step: 0,
+      shipInfos: dummyData.shipInfos,
+      shipWayId: 1,
     };
   },
   methods: {
@@ -70,6 +97,10 @@ export default {
     onNextStep() {
       if (this.step >= 2) return;
       this.step++;
+    },
+    changeShipWayId(shipWayId) {
+      this.shipWayId = shipWayId;
+      console.log("shipWayId", this.shipWayId);
     },
   },
 };

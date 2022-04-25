@@ -75,7 +75,13 @@
           class="ship-way-wrapper"
         >
           <div class="ship-way">
-            <input class="mr-3" name="ship" type="radio" value="standard" />
+            <input
+              class="mr-3"
+              name="ship"
+              type="radio"
+              :value="shipInfo.id"
+              v-model="shipWayId"
+            />
             <label for="" class="mt-2"
               >{{ shipInfo.shipWay }} <br />
               {{ shipInfo.shipTime }}</label
@@ -166,25 +172,34 @@
 </style>
 
 <script>
-const dummyData = [
-  {
-    id: 1,
-    shipWay: "標準運送",
-    shipTime: "約 3~7 個工作天",
-    shipPrice: "免費",
-  },
-  { id: 2, shipWay: "DHL 貨運", shipTime: "48 小時內送達", shipPrice: "$500" },
-];
 export default {
   data() {
     return {
-      shipInfos: dummyData,
+      shipWayId: this.initialShipWayId,
     };
   },
   props: {
     step: {
       type: Number,
       required: true,
+    },
+    shipInfos: {
+      type: Array,
+      required: true,
+    },
+    initialShipWayId: {
+      //initial-ship-way-id -> this
+      type: Number,
+      required: true,
+    },
+  },
+  watch: {
+    shipWayId: {
+      handler: function () {
+        console.log("shipWayId change");
+        this.$emit("change-ship-way-id", this.shipWayId);
+      },
+      // deep: true,
     },
   },
 };
