@@ -8,11 +8,22 @@
         <div class="product-info" data-price="3999">
           <h5>{{ product.name }}</h5>
           <div class="amount-area">
-            <i class="fas fa-minus">-</i>
+            <i
+              @click="onMinusOneCount(product.id, product.eachPrice)"
+              class="fas fa-minus"
+              >-</i
+            >
             <p>{{ product.count }}</p>
-            <i class="fas fa-plus">+</i>
+            <i
+              @click="onAddOneCount(product.id, product.eachPrice)"
+              class="fas fa-plus"
+            >
+              +
+            </i>
           </div>
-          <h5 class="product-total-price">{{ product.price }}</h5>
+          <h5 class="product-total-price">
+            {{ product.totalPriceByOneProduct | toCurrency }}
+          </h5>
         </div>
       </div>
 
@@ -22,7 +33,7 @@
       </div>
       <div class="product-price">
         <p>小計</p>
-        <p class="total-price">$5,298</p>
+        <p class="total-price">{{ totalPrice | toCurrency }}</p>
       </div>
     </div>
   </div>
@@ -99,14 +110,16 @@ const dummyData = {
       name: "破壞補釘修身牛仔褲",
       image: "../assets/photo-1@2x.png",
       count: 1,
-      price: 3999,
+      eachPrice: 3999,
+      totalPriceByOneProduct: 3999,
     },
     {
       id: 2,
       name: "刷色直筒牛仔褲",
       image: "../assets/photo-1@2x.png",
       count: 1,
-      price: 1299,
+      eachPrice: 1299,
+      totalPriceByOneProduct: 1299,
     },
   ],
 };
@@ -114,7 +127,34 @@ export default {
   data() {
     return {
       products: dummyData.products,
+      totalPrice: 5298,
     };
+  },
+  methods: {
+    onAddOneCount(id, eachPrice) {
+      this.products[id - 1].count++;
+      this.products[id - 1].totalPriceByOneProduct += eachPrice;
+      this.totalPrice += eachPrice;
+    },
+    onMinusOneCount(id, eachPrice) {
+      if (this.products[id - 1].count <= 0) return;
+      this.products[id - 1].count--;
+      this.products[id - 1].totalPriceByOneProduct -= eachPrice;
+      this.totalPrice -= eachPrice;
+    },
+  },
+  filters: {
+    toCurrency(value) {
+      if (typeof value !== "number") {
+        return value;
+      }
+      const formatter = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0,
+      });
+      return formatter.format(value);
+    },
   },
 };
 </script>
